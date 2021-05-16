@@ -8,7 +8,7 @@ Setup
 ===
 
 1. Clone repository
-2. Adjust docker-compose.yml to match your external domains (`MEDIAWIKI_SITE_SERVER`, `PARSOID_DOMAIN`) and port (8086)
+2. Adjust docker-compose.yml to match your external domains (`MEDIAWIKI_SITE_SERVER`) and port (8086)
 3. `docker-compose up -d`
 4. Setup a reverse proxy from your SSL-terminating http server to local wiki port (8086)
 
