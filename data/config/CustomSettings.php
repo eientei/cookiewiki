@@ -296,3 +296,4 @@ $wgNamespacesToBeSearchedDefault = array(
 
 $wgAllowExternalImages = true;
 
+$wgLogo = "/images/a/a7/RU姉貴_icon_smiling_with_tea.jpg";
