@@ -33,7 +33,7 @@ services:
       - ./data/config/ParsoidHandler_custom_1_35.php:/var/www/html/vendor/wikimedia/parsoid/extension/src/Rest/Handler/ParsoidHandler.php
     environment:
       - PARSOID_DOMAIN=localhost
-      - MEDIAWIKI_SITE_SERVER=https://cookiewiki.eientei.org
+      - MEDIAWIKI_SITE_SERVER=https://cookiewiki.org
       - MEDIAWIKI_SITE_NAME=Cookie wiki
       - MEDIAWIKI_DB_HOST=db
       - MEDIAWIKI_DB_PASSWORD=password
