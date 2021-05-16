@@ -296,4 +296,4 @@ $wgNamespacesToBeSearchedDefault = array(
 
 $wgAllowExternalImages = true;
 
-$wgLogo = "/images/a/a7/RU姉貴_icon_smiling_with_tea.jpg";
+$wgLogo = "/images/0/07/Cookiewiki_logo.png";
