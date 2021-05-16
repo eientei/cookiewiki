@@ -8,8 +8,6 @@ services:
       - MYSQL_ROOT_PASSWORD=password
     volumes:
       - ./data/database:/var/lib/mysql
-    ports:
-      - 3306:3306
   web: &app
     image: ubcctlt/mediawiki:REL1_35
     ports:
@@ -34,11 +32,12 @@ services:
       # the Parsoid domain is not configurable. so we needed to disable the check as we are using "localhost" in Restbase redirection
       - ./data/config/ParsoidHandler_custom_1_35.php:/var/www/html/vendor/wikimedia/parsoid/extension/src/Rest/Handler/ParsoidHandler.php
     environment:
-      - PARSOID_DOMAIN=localhost
-      - MEDIAWIKI_SITE_SERVER=http://localhost:8086
+      - PARSOID_DOMAIN=cookiewiki.eientei.org
+      - MEDIAWIKI_SITE_SERVER=https://cookiewiki.eientei.org
       - MEDIAWIKI_SITE_NAME=Cookie wiki
       - MEDIAWIKI_DB_HOST=db
       - MEDIAWIKI_DB_PASSWORD=password
+      - MEDIAWIKI_DB_USER=root
       - MEDIAWIKI_ADMIN_USER=admin
       - MEDIAWIKI_ADMIN_PASS=admin12345
       # uncomment 'MEDIAWIKI_ENABLE_SSL' to enable SSL support
@@ -84,30 +83,18 @@ services:
       # - CALIPER_LDAP_ACTOR_HOMEPAGE=http://media_wiki_ldap_homepage
   job_runner:
     <<: *app
+    ports: []
     labels:
       org.cookie.container: "mediawiki-runner"
     command: php /var/www/html/maintenance/runJobs.php --wait
-    ports:
-      - 8081:80
 
   nodeservices:
     image: ubcctlt/mediawiki-node-services:remove_parsoid_js
-    ports:
-      - 7231:7231
     environment:
       - MEDIAWIKI_API_URL=http://web/api.php
       - MEDIAWIKI_REST_URL=http://web/rest.php
       - LOG_LEVEL=debug
     volumes:
       - ./data/services:/data
-  #ldap:
-  #  image: osixia/openldap:1.1.9
-  #  command: --copy-service
-  #  ports:
-  #    - 1389:389
-  #  volumes:
-  #    - ./data/config/ldapadd_ubcedu.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/ldapadd_ubcedu.ldif
-  #    - ./data/ldap:/var/lib/ldap
-  #    - ./data/slapd.d:/etc/ldap/slapd.d
   redis:
     image: redis:6.0-alpine
