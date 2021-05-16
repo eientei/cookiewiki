@@ -4,6 +4,14 @@ CookieWiki☆ docker-compose environment
 Based on https://github.com/ubc/mediawiki-docker/tree/REL1_35
 
 
+Setup
+===
+
+1. Clone repository
+2. Adjust docker-compose.yml to match your external domains (`MEDIAWIKI_SITE_SERVER`, `PARSOID_DOMAIN`) and port (8086)
+3. `docker-compose up -d`
+4. Setup a reverse proxy from your SSL-terminating http server to local wiki port (8086)
+
 Backup
 ===
 
