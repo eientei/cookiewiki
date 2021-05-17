@@ -297,3 +297,42 @@ $wgNamespacesToBeSearchedDefault = array(
 $wgAllowExternalImages = true;
 
 $wgLogo = "/images/0/07/Cookiewiki_logo.png";
+
+// Safety: before extension.json, these values were initialized by JsonConfig.php
+if ( !isset( $wgJsonConfigModels ) ) {
+	$wgJsonConfigModels = [];
+}
+if ( !isset( $wgJsonConfigs ) ) {
+	$wgJsonConfigs = [];
+}
+
+$wgJsonConfigEnableLuaSupport = true;
+
+$wgJsonConfigModels['Tabular.JsonConfig'] = 'JsonConfig\JCTabularContent';
+$wgJsonConfigs['Tabular.JsonConfig'] = [
+	'namespace' => 486,
+	'nsName' => 'Data',
+	// page name must end in ".tab", and contain at least one symbol
+	'pattern' => '/.\.tab$/',
+	'license' => 'CC0-1.0',
+	'isLocal' => false,
+];
+
+// Enable Tabular data namespace on Commons - T148745
+$wgJsonConfigInterwikiPrefix = 'commons';
+$wgJsonConfigs['Tabular.JsonConfig']['remote'] = [
+	'url' => 'https://commons.wikimedia.org/w/api.php'
+];
+
+$wgJsonConfigModels['Map.JsonConfig'] = 'JsonConfig\JCMapDataContent';
+$wgJsonConfigs['Map.JsonConfig'] = [
+	'namespace' => 486,
+	'nsName' => 'Data',
+	// page name must end in ".map", and contain at least one symbol
+	'pattern' => '/.\.map$/',
+	'license' => 'CC0-1.0',
+	'isLocal' => false,
+];
+$wgJsonConfigs['Map.JsonConfig']['remote'] = [
+	'url' => 'https://commons.wikimedia.org/w/api.php'
+];

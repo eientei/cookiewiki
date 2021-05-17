@@ -19,6 +19,8 @@ docker exec -ti $(docker ps -f label=org.cookie.container=mariadb --format='{{.I
 
 tar --transform "s/data\/web/$now\/web/;s/temp/$now\/sql/" -czvf backups/${now}.tar.gz temp/database.sql.gz data/web
 
+ln -sf ${now}.tar.gz backups/latest.tar.gz
+
 rm -r temp
 
 # remove every backup but
