@@ -297,6 +297,7 @@ $wgNamespacesToBeSearchedDefault = array(
 $wgAllowExternalImages = true;
 
 $wgLogo = "/images/0/07/Cookiewiki_logo.png";
+$wgFavicon = "/images/0/07/Cookiewiki_logo.png";
 
 // Safety: before extension.json, these values were initialized by JsonConfig.php
 if ( !isset( $wgJsonConfigModels ) ) {
