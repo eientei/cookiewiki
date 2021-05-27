@@ -337,3 +337,18 @@ $wgJsonConfigs['Map.JsonConfig'] = [
 $wgJsonConfigs['Map.JsonConfig']['remote'] = [
 	'url' => 'https://commons.wikimedia.org/w/api.php'
 ];
+
+
+$wgMainCacheType    = CACHE_ANYTHING;
+
+$wgGroupPermissions['emailconfirmed']['skipcaptcha'] = true;
+$ceAllowConfirmedEmail = true;
+
+$wgCaptchaTriggers['edit'] = false;
+$wgCaptchaTriggers['create'] = false;
+$wgCaptchaTriggers['addurl'] = false;
+$wgCaptchaTriggers['createaccount'] = true;
+$wgCaptchaTriggers['badlogin'] = true;
+
+// define hcaptcha keyso in PrivateSettings.php
+include('PrivateSettings.php');
