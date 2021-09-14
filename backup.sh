@@ -1,5 +1,7 @@
 #!/bin/sh
 
+docker exec -ti cookiewiki_web_1 php maintenance/generateSitemap.php --memory-limit=50M --fspath=/data/sitemap/  --urlpath=/sitemap/ --server=https://cookiewiki.org --compress=yes --skip-redirects
+
 function unlock() {
   docker exec -ti $(docker ps -f label=org.cookie.container=mediawiki --format='{{.ID}}') \
     sh -c "sed '/wgReadOnly/d' -i LocalSettings.php"
