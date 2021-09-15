@@ -42,8 +42,9 @@ services:
       - MEDIAWIKI_ADMIN_PASS=admin12345
       # uncomment 'MEDIAWIKI_ENABLE_SSL' to enable SSL support
       # - MEDIAWIKI_ENABLE_SSL=true
-      - MEDIAWIKI_EXTENSIONS=VisualEditor,WikiEditor,ParserFunctions,Cite,TemplateData,Scribunto,InputBox,Widgets,Maps,Math,LiquidThreads,Variables,RightFunctions,PageInCat,CategoryTree,LabeledSectionTransclusion,UserPageEditProtection,Quiz,UploadWizard,Collection,DynamicPageList,EmbedPage,UWUBCMessages,GoogleAnalyticsMetrics,googleAnalytics,Renameuser,caliper,DeleteBatch,LinkTarget,TemplateStyles,JsonConfig,ConfirmEdit,ConfirmEdit/hCaptcha
+      - MEDIAWIKI_EXTENSIONS=VisualEditor,WikiEditor,ParserFunctions,Cite,TemplateData,Scribunto,InputBox,Widgets,Maps,Math,LiquidThreads,Variables,RightFunctions,PageInCat,CategoryTree,LabeledSectionTransclusion,UserPageEditProtection,Quiz,UploadWizard,Collection,DynamicPageList,EmbedPage,UWUBCMessages,GoogleAnalyticsMetrics,googleAnalytics,Renameuser,caliper,DeleteBatch,LinkTarget,TemplateStyles,JsonConfig,ConfirmEdit,ConfirmEdit/hCaptcha,TextExtracts,WikiSEO,MobileFrontend
       - MEDIAWIKI_ALLOW_SITE_CSS_ON_RESTRICTED_PAGES=true
+      - MEDIAWIKI_DEFAULT_SKIN=vector
       - RESTBASE_URL=http://nodeservices:7231
       #- LDAP_DOMAIN=CWL
       #- LDAP_SERVER=ldap

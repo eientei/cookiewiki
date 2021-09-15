@@ -350,5 +350,35 @@ $wgCaptchaTriggers['addurl'] = false;
 $wgCaptchaTriggers['createaccount'] = true;
 $wgCaptchaTriggers['badlogin'] = true;
 
+
+$wgWikiSeoDefaultLanguage = 'en-us';
+
+wfLoadSkin( 'MinervaNeue' );
+
+$wgMFDefaultSkinClass = 'SkinMinerva';
+
+$wgWikiSeoEnableAutoDescription = true;
+
+$wgWikiSeoTryCleanAutoDescription = true;
+
+$wgExtractsRemoveClasses = array(
+  'table',
+  'div',
+  'script',
+  'input',
+  'style',
+  'ul.gallery',
+  '.mw-editsection',
+  'sup.reference',
+  'ol.references',
+  '.error',
+  '.nomobile',
+  '.noprint',
+  '.noexcerpt',
+  '.sortkey',
+  'rp',
+  'rt'
+);
+
 // define hcaptcha keyso in PrivateSettings.php
 include('PrivateSettings.php');
