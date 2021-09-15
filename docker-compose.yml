@@ -12,6 +12,12 @@ services:
     image: ubcctlt/mediawiki:REL1_35
     ports:
       - 8086:80
+    entrypoint:
+      - "/bin/sh"
+      - "-c"
+      - |
+        [ -e /data/sitemap ] && ln -s /data/sitemap
+        exec /entrypoint.sh apachectl -e info -D FOREGROUND
     # use the links section if you want to use a container for a database.
     # if not, and you want to use an external database server, configure
     # if with the environment variables in the 'environment' section.
