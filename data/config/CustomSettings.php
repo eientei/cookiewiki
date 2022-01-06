@@ -380,5 +380,98 @@ $wgExtractsRemoveClasses = array(
   'rt'
 );
 
+
+$wgEnablePageTranslation = true;
+
+
+$wgPageTranslationNamespace = 1198;
+
+$wgTranslatePageTranslationULS = false;
+
+$wgCCTrailerFilter = true;
+$wgCCUserFilter = false;
+$wgDefaultUserOptions['usenewrc'] = 1;
+
+$wgLocalisationUpdateDirectory = "$IP/cache";
+$wgCacheDirectory = "$IP/cache";
+
+$wgGroupPermissions['user']['translate'] = true;
+$wgGroupPermissions['user']['translate-messagereview'] = true;
+$wgGroupPermissions['user']['translate-groupreview'] = true;
+$wgGroupPermissions['user']['translate-import'] = true;
+$wgGroupPermissions['sysop']['pagetranslation'] = true;
+$wgGroupPermissions['sysop']['translate-manage'] = true;
+$wgPageLanguageUseDB = true;
+$wgGroupPermissions['sysop']['pagelang'] = true;
+
+$wgTranslateDocumentationLanguageCode = 'qqq';
+$wgExtraLanguageNames['qqq'] = 'Message documentation'; # No linguistic content. Used for documenting messages
+
+$wgPasswordConfig = [
+        'A' => [
+                'class' => MWOldPassword::class,
+        ],
+        'B' => [
+                'class' => MWSaltedPassword::class,
+        ],
+        'pbkdf2-legacyA' => [
+                'class' => LayeredParameterizedPassword::class,
+                'types' => [
+                        'A',
+                        'pbkdf2',
+                ],
+        ],
+        'pbkdf2-legacyB' => [
+                'class' => LayeredParameterizedPassword::class,
+                'types' => [
+                        'B',
+                        'pbkdf2',
+                ],
+        ],
+        'bcrypt' => [
+                'class' => BcryptPassword::class,
+                'cost' => 9,
+        ],
+        'pbkdf2' => [
+                'class' => Pbkdf2Password::class,
+                'algo' => 'sha512',
+                'cost' => '120000',
+                'length' => '64',
+        ],
+        'argon2' => [
+                'class' => Argon2Password::class,
+                'algo' => 'argon2id',
+                'memory_cost' => '15797312',
+                'time_cost' => '2',
+                'threads' => '1',
+        ],
+];
+
+$wgPasswordDefault = 'pbkdf2';
+
+
 // define hcaptcha keyso in PrivateSettings.php
 include('PrivateSettings.php');
+
+// ParserPreSaveTransformComplete
+$wgHooks['ParserBeforeInternalParse'][] = function (Parser $parser, string &$text, StripState $stripState) {
+  $text = preg_replace_callback(
+        '#{{ruby-ja\|(.*?)}}#i',
+        function ($matches) {
+            $f = "/tmp/baka". "-" . time() . "-" . rand();
+            file_put_contents($f, $matches[1] . "\n");
+            $ret = shell_exec("(" .
+              "cat " . $f . " | kakasi -i utf8 -JK -KK -HH -f -s | sed 's/\[[^]]*\]//g'; " .
+              "cat " . $f . " | kakasi -i utf8  -kK  -KK -HH -JH -s; " .
+              "cat " . $f . " | kakasi -i utf8 -kK -KK -HH -JH -s | kakasi -i utf8 -Ha -Ka; " .
+            ") | awk '{k=NF; for (i = 1; i <= NF; i++) { s[i] = s[i]? s[i] FS $(i) : $(i); }}END{for (i = 1; i <= k; i++) {print s[i]}}'" .
+            " | awk '{if ($1 == $2 && $2 == $3) { printf(\"{{ruby-en|%s|}}\",$1); } else if ($1 == $2) { printf(\"{{ruby-en|%s|%s}}\", $1, $3) } else { printf(\"{{ruby-enja|%s|%s|%s}}\", $1, $2, $3); }}'"
+            );
+            unlink($f);
+            return $ret;
+        },
+        $text
+  );
+  return true;
+};
+

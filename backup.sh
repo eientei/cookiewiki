@@ -1,22 +1,22 @@
 #!/bin/sh
 
-docker exec -ti cookiewiki_web_1 php maintenance/generateSitemap.php --memory-limit=50M --fspath=/data/sitemap/  --urlpath=/sitemap/ --server=https://cookiewiki.org --compress=yes --skip-redirects
+docker exec -i cookiewiki_web_1 php maintenance/generateSitemap.php --memory-limit=50M --fspath=/data/sitemap/  --urlpath=/sitemap/ --server=https://cookiewiki.org --compress=yes --skip-redirects
 
 function unlock() {
-  docker exec -ti $(docker ps -f label=org.cookie.container=mediawiki --format='{{.ID}}') \
+  docker exec -i $(docker ps -f label=org.cookie.container=mediawiki --format='{{.ID}}') \
     sh -c "sed '/wgReadOnly/d' -i LocalSettings.php"
 }
 
 trap unlock EXIT
 
-docker exec -ti $(docker ps -f label=org.cookie.container=mediawiki --format='{{.ID}}') \
+docker exec -i $(docker ps -f label=org.cookie.container=mediawiki --format='{{.ID}}') \
   sh -c "echo '\$wgReadOnly = \"Dumping Database, Access will be restored shortly\";' >> LocalSettings.php"
 
 now=$(date +%F-%H-%M-%S)
 
 mkdir -p temp
 
-docker exec -ti $(docker ps -f label=org.cookie.container=mariadb --format='{{.ID}}') \
+docker exec -i $(docker ps -f label=org.cookie.container=mariadb --format='{{.ID}}') \
   mysqldump -ppassword mediawiki | gzip -9 > temp/database.sql.gz
 
 tar --transform "s/data\/web/$now\/web/;s/temp/$now\/sql/" -czvf backups/${now}.tar.gz temp/database.sql.gz data/web
