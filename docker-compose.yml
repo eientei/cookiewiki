@@ -20,7 +20,7 @@ services:
       - |
         [ -e /data/sitemap ] && ln -s /data/sitemap
         apt-get update
-        apt-get install kakasi
+        apt-get install -y kakasi
         exec /entrypoint.sh apachectl -e info -D FOREGROUND
     # use the links section if you want to use a container for a database.
     # if not, and you want to use an external database server, configure
