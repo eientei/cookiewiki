@@ -2,6 +2,7 @@ version: '2'
 services:
   db:
     image: mariadb:10.4
+    restart: "unless-stopped"
     labels:
       org.cookie.container: "mariadb"
     environment:
@@ -10,6 +11,7 @@ services:
       - ./data/database:/var/lib/mysql
   web: &app
     image: ubcctlt/mediawiki:REL1_35
+    restart: "unless-stopped"
     ports:
       - 8086:80
     entrypoint:
@@ -99,6 +101,7 @@ services:
 
   nodeservices:
     image: ubcctlt/mediawiki-node-services:remove_parsoid_js
+    restart: "unless-stopped"
     environment:
       - MEDIAWIKI_API_URL=http://web/api.php
       - MEDIAWIKI_REST_URL=http://web/rest.php
